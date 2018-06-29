@@ -26,6 +26,11 @@ public class Frame {
         numberOfFallenPinByTheFirstBall = resultOfTheFirstRoll;
         numberOfFallenPinByTheSecondBall = resultOfTheSecondRoll;
         score = numberOfFallenPinByTheFirstBall + numberOfFallenPinByTheSecondBall;
+        if(score>10){
+            System.out.println("violation of the rules : total of fallen pins is over 10 for a frame |"
+                    +numberOfFallenPinByTheFirstBall+":"+numberOfFallenPinByTheSecondBall+"|... check the input please.");
+            System.exit(1);
+        }
         type = numberOfFallenPinByTheFirstBall + numberOfFallenPinByTheSecondBall ==10? KindOfFrame.Spare: KindOfFrame.Regular;
     }
 
@@ -83,6 +88,10 @@ public class Frame {
     public String toString() {
         return "Frame{type=" + type + ", score=" + score + ", numberOfFallenPinByTheFirstBall=" + numberOfFallenPinByTheFirstBall + ", numberOfFallenPinByTheSecondBall=" + numberOfFallenPinByTheSecondBall +'}';
     }
+
+
+
+
     ////////////////////////////////////////////////////////////////////
 
 
