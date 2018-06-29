@@ -11,4 +11,4 @@ Little software to display and compute score for a bowling game.
 
 outputSample (29/06/18@22h12)
 
-  ![alt text](res/Capture d’écran de 2018-06-29 22-11-43.png)
+  ![alt text](https://github.com/Jannou/MasterBow/blob/master/res/Capture%20d%E2%80%99%C3%A9cran%20de%202018-06-29%2022-11-43.png)
