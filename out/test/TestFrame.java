@@ -27,8 +27,8 @@ class TestFrame{
 
     @Test
     void getScore() {
-        Assertions.assertEquals(10,testFrameStrike.getScore() );
-        Assertions.assertEquals(8,testFrame.getScore() );
+        Assertions.assertEquals(10,testFrameStrike.getPinsKnockedDown() );
+        Assertions.assertEquals(8,testFrame.getPinsKnockedDown() );
 
     }
 

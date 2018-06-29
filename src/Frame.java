@@ -3,14 +3,16 @@
  * A frame can either be a regular one, or a strike or a spare.
  * A frame is composed by 2 rolls (except if it is a strike, in this case the frame correspond to one roll)
  * Each roll is characterized by a number of fallen pins.
- * A frame has also a score and can be the last of the game.
+ * A frame has also a pinsKnockedDown and can be the last of the game.
  */
 public class Frame {
 
     // type of the frame
     private KindOfFrame type;
     // total of fallen pins during the frame
-    private int score  ;
+    private int pinsKnockedDown;
+    // score of the frame ;
+    private int score = 0;
     // number of pins knocked over during the first roll of the frame
     private int numberOfFallenPinByTheFirstBall;
     // number of pins knocked over during the second roll of the frame
@@ -25,9 +27,9 @@ public class Frame {
     Frame(int resultOfTheFirstRoll, int resultOfTheSecondRoll){
         numberOfFallenPinByTheFirstBall = resultOfTheFirstRoll;
         numberOfFallenPinByTheSecondBall = resultOfTheSecondRoll;
-        score = numberOfFallenPinByTheFirstBall + numberOfFallenPinByTheSecondBall;
-        if(score>10){
-            System.out.println("violation of the rules : total of fallen pins is over 10 for a frame |"
+        pinsKnockedDown = numberOfFallenPinByTheFirstBall + numberOfFallenPinByTheSecondBall;
+        if(pinsKnockedDown >10){
+            System.out.println("violation of the rules : total of pins knocked down during a frame is over 10  |"
                     +numberOfFallenPinByTheFirstBall+":"+numberOfFallenPinByTheSecondBall+"|... check the input please.");
             System.exit(1);
         }
@@ -38,9 +40,9 @@ public class Frame {
      * Construct a strike frame (1roll).
      */
     Frame(){
-        numberOfFallenPinByTheFirstBall = 10;
-        score = numberOfFallenPinByTheFirstBall;
         type = KindOfFrame.Strike;
+        numberOfFallenPinByTheFirstBall = 10;
+        pinsKnockedDown = numberOfFallenPinByTheFirstBall;
     }
 
     /**
@@ -52,11 +54,11 @@ public class Frame {
     }
 
     /**
-     * Return the score of the frame.
-     * @return the score of the frame.
+     * Return the number of pins knocked down during the frame.
+     * @return the number of pins knocked down during the frame.
      */
-    int getScore() {
-        return score;
+    int getPinsKnockedDown() {
+        return pinsKnockedDown;
     }
 
     /**
@@ -75,10 +77,17 @@ public class Frame {
         return numberOfFallenPinByTheSecondBall;
     }
 
+    /**
+     * Return the score of the frame.
+     * @return the score of the frame.
+     */
+    int getScore() {
+        return score;
+    }
 
     /**
      * Set the score of the frame.
-     * @param score the new score.
+     * @param score the new score of the frame.
      */
     void setScore(int score) {
         this.score = score;
@@ -86,7 +95,7 @@ public class Frame {
 
     @Override
     public String toString() {
-        return "Frame{type=" + type + ", score=" + score + ", numberOfFallenPinByTheFirstBall=" + numberOfFallenPinByTheFirstBall + ", numberOfFallenPinByTheSecondBall=" + numberOfFallenPinByTheSecondBall +'}';
+        return "Frame{type=" + type + ", pinsKnockedDown=" + pinsKnockedDown + ", numberOfFallenPinByTheFirstBall=" + numberOfFallenPinByTheFirstBall + ", numberOfFallenPinByTheSecondBall=" + numberOfFallenPinByTheSecondBall +'}';
     }
 
 
