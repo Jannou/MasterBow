@@ -2,6 +2,10 @@
 
 Little software to display and compute score for a bowling game.
 
+> command Line format : 
+
+> java -jar MasterBow.jar numberOfKnockedDownPinsDuringRoll...  
+
 
 outputSample (29/06/18@22h12)
 
