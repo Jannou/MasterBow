@@ -1,23 +1,18 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
- * This class is used to build a ingeniousVersion.PrettyGame and compute the score for the given input
+ * This class is used to build a PrettyGame and compute the score for the given input
  */
 public class PrettyGame {
+
+    // error msg
+    private static final String LAST_FRAME_FORMAT_ERROR="The last frame may contain up to three rolls iff the player perform a strike or a spare before ... Check the input please.";
 
     private Frame[] frames;
     private int score =0;
 
     private PrettyGame(Frame[] _frames){
-        if(_frames.length>12){
-            System.out.println("a bowling game may not contain more than 12 frames ... check the input please.");
-            System.exit(1);
-        }
-        if((_frames.length==11 &&  _frames[9].getType()!= Frame.KindOfFrame.Spare)  ||
-                (_frames.length==12 && _frames[9].getType()!= Frame.KindOfFrame.Strike)){
-            System.out.println("A bowling game may contain 11(resp 12) frames iff the 10th frame is a spare (resp. a strike)... check the input please.");
-            System.exit(1);
-        }
         frames= _frames;
     }
 
@@ -30,44 +25,50 @@ public class PrettyGame {
         int nbrOfrolls = fallenPins.length;
         ArrayList<Frame> frames = new ArrayList<>(9);
         int i = 0;
+
         while(frames.size()<9 && i<nbrOfrolls ){
-            if(fallenPins[i]!=10){
-                Frame tmp = new Frame( fallenPins[i], i==nbrOfrolls-1?0:fallenPins[i+1]);
-                frames.add(0,tmp);
-                i+=2;
-            }else{
-                frames.add(0,new Frame());
-                i++;
-            }
+            i = buildFrame(fallenPins, nbrOfrolls, frames, i);
         }
-        //last Frame
-        if(i <  nbrOfrolls ){
-            Frame lastOne;
-            if(fallenPins[i]!=10){
-                lastOne = new Frame( fallenPins[i], i==nbrOfrolls-1?0:fallenPins[i+1]);
-                i++;
-            }else{
-                lastOne= new Frame();
-            }
-            i++;
+        if(i <  nbrOfrolls ){  //last Frame
+            ArrayList<Frame> tmpArray = new ArrayList<>(1);
+            i = buildLastFrame(fallenPins, nbrOfrolls, tmpArray, i);
+            Frame lastFrame = tmpArray.get(0);
             //get 3rolls
             while(i < nbrOfrolls) {
-                if (lastOne.getType()== Frame.KindOfFrame.Regular || lastOne.addRoll(fallenPins[i])==-1){
-                    System.out.println("The last frame may contain up to three rolls iff the player" +
-                            " perform a strike or a spare before ... Check the input please.");
+                if (lastFrame.customiseToLastFrame(fallenPins[i])==-1){ // fail if 3 rolls for a regular frame or if more than 3 roll for a strike or a spare
+                    System.out.println(LAST_FRAME_FORMAT_ERROR);
                     System.exit(1);
                 }
                 i++;
             }
-            frames.add(0,lastOne);
+            frames.add(0,lastFrame);
         }
-
         PrettyGame prettyGame = new PrettyGame(frames.toArray(new Frame[0]));
 
         if(!frames.isEmpty()) // check empty game
             prettyGame.computeScore();
 
         return prettyGame;
+    }
+
+
+    private static int buildFrame(int[] fallenPins, int nbrOfrolls, ArrayList<Frame> frames, int i) {
+        return buildNewFrame(fallenPins,nbrOfrolls , frames, i,false);
+    }
+
+    private static int buildLastFrame(int[] fallenPins, int nbrOfrolls, ArrayList<Frame> frames, int i) {
+        return buildNewFrame(fallenPins,nbrOfrolls , frames, i,true);
+    }
+
+    private static int buildNewFrame(int[] fallenPins, int nbrOfrolls, ArrayList<Frame> frames, int i,boolean lastFrame) {
+        Frame currentFrame = new Frame(lastFrame);
+        if(fallenPins[i]!=10){
+            currentFrame = new Frame( fallenPins[i], i==nbrOfrolls-1?0:fallenPins[i+1]);
+            i++;
+        }
+        i++;
+        frames.add(0,currentFrame);
+        return i;
     }
 
     /**
@@ -86,15 +87,26 @@ public class PrettyGame {
         int pinsKnockedDownDuringFirstNextRoll=0;
         int pinsKnockedDownDuringSecondNextRoll=0;
 
-        //start by the last frame => check if third rolls or not
-        if(frames[0].getNumberOfPinsKnockedDownByTheThirdBall()!=-1){
-            //inversion to handle spare rule
-            pinsKnockedDownDuringFirstNextRoll=frames[0].getNumberOfPinsKnockedDownByTheThirdBall();
-            pinsKnockedDownDuringSecondNextRoll=frames[0].getNumberOfPinsKnockedDownByTheSecondBall();
+        int scoreOfFrame = frames[0].getPinsKnockedDown();
+
+        //no choice here, have to handle 10th frame separately ...
+        if(frames.length==10){ // handle 10th frame
+            if(frames[0].getType()== Frame.KindOfFrame.Spare){
+                scoreOfFrame+=frames[0].getNumberOfPinsKnockedDownByTheSecondBall();
+                pinsKnockedDownDuringFirstNextRoll=frames[0].getNumberOfPinsKnockedDownByTheFirstBall();
+                pinsKnockedDownDuringSecondNextRoll = 10 - pinsKnockedDownDuringFirstNextRoll;
+
+            }else if(frames[0].getType()== Frame.KindOfFrame.Strike){
+                pinsKnockedDownDuringFirstNextRoll = 10;
+                pinsKnockedDownDuringSecondNextRoll = frames[0].getNumberOfPinsKnockedDownByTheFirstBall();
+                scoreOfFrame+=pinsKnockedDownDuringSecondNextRoll+frames[0].getNumberOfPinsKnockedDownByTheSecondBall();
+            }
+            frames[0].setScore(scoreOfFrame);
+            score+=scoreOfFrame;
         }
 
-        for(Frame frame : frames){
-            int scoreOfFrame = frame.getPinsKnockedDown();
+        for(Frame frame : Arrays.copyOfRange(frames, frames.length==10?1:0, frames.length)){
+            scoreOfFrame = frame.getPinsKnockedDown();
             if(frame.getType()== Frame.KindOfFrame.Strike)
                 scoreOfFrame+=pinsKnockedDownDuringFirstNextRoll+pinsKnockedDownDuringSecondNextRoll;
             else{
@@ -136,16 +148,23 @@ public class PrettyGame {
             sep.append("####");
             MyFrame.append(" ").append(frames.length).append(String.valueOf((frames.length )).length() < 2 ? " " : "").append(col);
             Result.append(frames[0].getType() == Frame.KindOfFrame.Regular ?
-                    frames[0].getNumberOfPinsKnockedDownByTheFirstBall() + ":" + frames[0].getNumberOfPinsKnockedDownByTheSecondBall()
-                    : frames[0].getType() == Frame.KindOfFrame.Spare ? "/ "+(frames[0].getNumberOfPinsKnockedDownByTheThirdBall()==10?"X":frames[0].getNumberOfPinsKnockedDownByTheThirdBall()) : "X"+frames[0].getNumberOfPinsKnockedDownByTheSecondBall()+frames[0].getNumberOfPinsKnockedDownByTheThirdBall()).append(col);
+                    frames[0].getNumberOfPinsKnockedDownByTheFirstBall() + ":" + frames[0].getNumberOfPinsKnockedDownByTheSecondBall() :
+                    frames[0].getType() == Frame.KindOfFrame.Spare ? "/ "+formateStrike(frames[0].getNumberOfPinsKnockedDownByTheSecondBall()):
+                            "X"+formateStrike(frames[0].getNumberOfPinsKnockedDownByTheFirstBall())+formateStrike(frames[0].getNumberOfPinsKnockedDownByTheSecondBall())).append(col);
             score +=frames[0].getScore();
             Score.append(spaces, 0, 3 - String.valueOf(score).length()).append(score).append(col);
         }
+
 
         sep.append("#");
 
         toString+=sep+" Frame\n"+MyFrame+"\n"+sep+"\n"+Result+"\n"+sep+" Score\n"+Score;
 
         return toString;
+    }
+
+    String formateStrike(int i){
+        if(i==10) return "X";
+        else return String.valueOf(i);
     }
 }

@@ -19,27 +19,12 @@ public class Frame {
     // score of the frame ;
     private int score = 0;
     // number of pins knocked over during the first roll of the frame
-    private int numberOfPinsKnockedDownByTheFirstBall;
+    private int numberOfPinsKnockedDownByTheFirstBall=-1;
     // number of pins knocked over during the second roll of the frame
     private int numberOfPinsKnockedDownByTheSecondBall=-1;
-    // number of pins knocked over during the third roll of the frame (for final frame)
-    private int numberOfPinsKnockedDownByTheThirdBall=-1;
 
-    /**
-     * qick fix t handler last frame (only for final frame)
-     * @param numberOfPinsKnockedDown pins knocked down during next roll
-     */
-    int addRoll(int numberOfPinsKnockedDown){
-
-        int retour = 0;
-        if(numberOfPinsKnockedDownByTheSecondBall== -1){
-            numberOfPinsKnockedDownByTheSecondBall = numberOfPinsKnockedDown;
-        } else if(numberOfPinsKnockedDownByTheThirdBall == -1 && getType()!=KindOfFrame.Regular){
-            numberOfPinsKnockedDownByTheThirdBall = numberOfPinsKnockedDown;
-        } else
-            retour = -1;
-        return retour;
-    }
+    // error msg
+    private static final String RULES_ERROR = "violation of the rules : total of pins knocked down during a frame is over 10  |%d:%d|... Check the input please.";
 
     /**
      * Construct a frame which isn't a strike (2rolls)
@@ -51,21 +36,22 @@ public class Frame {
         numberOfPinsKnockedDownByTheSecondBall = resultOfTheSecondRoll;
         pinsKnockedDown = numberOfPinsKnockedDownByTheFirstBall + numberOfPinsKnockedDownByTheSecondBall;
         if(pinsKnockedDown >10){
-            System.out.println("violation of the rules : total of pins knocked down during a frame is over 10  |"
-                    + numberOfPinsKnockedDownByTheFirstBall +":"+ numberOfPinsKnockedDownByTheSecondBall +"|... check the input please.");
+            System.out.format(RULES_ERROR, numberOfPinsKnockedDownByTheFirstBall , numberOfPinsKnockedDownByTheSecondBall);
             System.exit(1);
         }
-        type = numberOfPinsKnockedDownByTheFirstBall + numberOfPinsKnockedDownByTheSecondBall ==10? KindOfFrame.Spare: KindOfFrame.Regular;
+        type = pinsKnockedDown==10? KindOfFrame.Spare: KindOfFrame.Regular;
     }
 
     /**
      * Construct a strike frame (1roll).
      */
-    Frame(){
+    Frame(boolean isLast){
         type = KindOfFrame.Strike;
-        numberOfPinsKnockedDownByTheFirstBall = 10;
-        pinsKnockedDown = numberOfPinsKnockedDownByTheFirstBall;
+        numberOfPinsKnockedDownByTheFirstBall=isLast?-1:10;
+        pinsKnockedDown = 10;
     }
+
+
 
     /**
      * Return the type of the frame.
@@ -115,25 +101,41 @@ public class Frame {
         this.score = score;
     }
 
+
+
+    /**
+     * Customise a Frame to manage 10th frame behavior
+     * @param arg1 first roll to be played
+     * @return 0 if no rule violation -1 otherwise
+     */
+    int customiseToLastFrame(int arg1){
+        int result = -1; // try to customize finished frame  or more than 3 rolls
+
+        if(getType()==KindOfFrame.Strike){                                                                     //STRIKE => up to 2 extra roll to be played
+             if(numberOfPinsKnockedDownByTheFirstBall==-1) {
+                numberOfPinsKnockedDownByTheFirstBall = arg1;
+                result = 0;
+            }else if(numberOfPinsKnockedDownByTheSecondBall==-1) {
+                numberOfPinsKnockedDownByTheSecondBall = arg1;
+                result = 0;
+            }
+        }else if(getType()==KindOfFrame.Spare && numberOfPinsKnockedDownByTheFirstBall<10){                     //SPARE 1 extra roll to be played
+            numberOfPinsKnockedDownByTheSecondBall= arg1;
+            result = 0;
+        }
+        return result;
+    }
+
+
+
+
     @Override
     public String toString() {
-        return "Frame{type=" + type + ", pinsKnockedDown=" + pinsKnockedDown + ", numberOfPinsKnockedDownByTheFirstBall=" + numberOfPinsKnockedDownByTheFirstBall + ", numberOfPinsKnockedDownByTheSecondBall=" + numberOfPinsKnockedDownByTheSecondBall + ", numberOfPinsKnockedDownByTheThirdBall=" + numberOfPinsKnockedDownByTheThirdBall +", score="+getScore()+'}';
-    }
-
-    /**
-     * Set the number of fallen pin during the third roll.
-     * @param numberOfPinsKnockedDownByTheThirdBall the number of fallen pin during the third roll.
-     */
-    public void setNumberOfPinsKnockedDownByTheThirdBall(int numberOfPinsKnockedDownByTheThirdBall) {
-        this.numberOfPinsKnockedDownByTheThirdBall = numberOfPinsKnockedDownByTheThirdBall;
-    }
-
-    /**
-     * Return the number of fallen pin during the third roll.
-     * @return the number of fallen pin during the third roll.
-     */
-    int getNumberOfPinsKnockedDownByTheThirdBall() {
-        return numberOfPinsKnockedDownByTheThirdBall;
+        return "Frame{type="
+                + type + ", pinsKnockedDown="
+                + pinsKnockedDown + ", numberOfPinsKnockedDownByTheFirstBall="
+                + numberOfPinsKnockedDownByTheFirstBall + ", numberOfPinsKnockedDownByTheSecondBall="
+                + numberOfPinsKnockedDownByTheSecondBall +", score="+getScore()+'}';
     }
 
 

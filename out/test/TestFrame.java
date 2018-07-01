@@ -11,7 +11,7 @@ class TestFrame{
     @BeforeEach
     void setUp() {
         testFrame = new Frame(7,1 );
-        testFrameStrike = new Frame();
+        testFrameStrike = new Frame(false);
     }
 
     @Test
@@ -50,18 +50,17 @@ class TestFrame{
 
     @Test
     void TestFinalFrame() {
-        testFrameStrike.addRoll(9);
-        Assertions.assertEquals(9,testFrameStrike.getNumberOfPinsKnockedDownByTheSecondBall());
-        testFrameStrike.addRoll(7);
-        Assertions.assertEquals(7,testFrameStrike.getNumberOfPinsKnockedDownByTheThirdBall());
+        testFrameStrike = new Frame(true);
+        testFrameStrike.customiseToLastFrame(9);
+        Assertions.assertEquals(9,testFrameStrike.getNumberOfPinsKnockedDownByTheFirstBall());
+        testFrameStrike.customiseToLastFrame(7);
+        Assertions.assertEquals(7,testFrameStrike.getNumberOfPinsKnockedDownByTheSecondBall());
         testFrame = new Frame(9,1);
-        testFrame.addRoll(7);
-        Assertions.assertEquals(1,testFrame.getNumberOfPinsKnockedDownByTheSecondBall() );
-        Assertions.assertEquals(7,testFrame.getNumberOfPinsKnockedDownByTheThirdBall());
+        testFrame.customiseToLastFrame(7);
+        Assertions.assertEquals(9,testFrame.getNumberOfPinsKnockedDownByTheFirstBall());
+        Assertions.assertEquals(7,testFrame.getNumberOfPinsKnockedDownByTheSecondBall() );
         testFrame = new Frame(9,0);
-        testFrame.addRoll(7);
-        Assertions.assertEquals(0,testFrame.getNumberOfPinsKnockedDownByTheSecondBall() );
-        Assertions.assertEquals(-1,testFrame.getNumberOfPinsKnockedDownByTheThirdBall());
+        Assertions.assertEquals(-1,testFrame.customiseToLastFrame(7));
 
     }
 
