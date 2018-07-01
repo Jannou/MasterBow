@@ -16,10 +16,10 @@ class Utils {
      * @param args the array of Strings.
      * @return an array of integers or an exception.
      */
-    static Integer[] checkAndPreProcessInput(String[] args){
-        Integer[] result = new Integer[args.length];
+    static int[] checkAndPreProcessInput(String[] args){
+        int[] result = new int[args.length];
         for(int index = 0 ; index<args.length;index++){
-            preProcess(args[index], result, index);
+            result[index]= preProcess(args[index]);
         }
         return result;
     }
@@ -29,21 +29,18 @@ class Utils {
      * iff the array of strings represents
      * only integers >-1 and <11 otherwise the method returns null.
      * @param arg String representing a integer.
-     * @param result array to store the integer corresponding to the String.
-     * @param index index of the String into the array of Strings.
      */
-    private static void preProcess(String arg, Integer[] result, int index) {
+    static int preProcess(String arg) {
+        int tmp=-5;
         try{
-            int tmp= Integer.valueOf(arg);
-            if(-1<tmp && tmp<11){
-                result[index]= tmp;
-            }else{
+            tmp= Integer.valueOf(arg);
+            if(tmp<0||tmp>10)
                 throw new PinOutOfBound(tmp);
-            }
         } catch (Exception e){
             System.out.println(e+"\n"+ INPUT_HELP);
             System.exit(1);
         }
+        return tmp;
     }
 
 

@@ -15,36 +15,54 @@ class TestFrame{
     }
 
     @Test
-    void getType() {
+    void TestgetType() {
         Assertions.assertEquals(Frame.KindOfFrame.Strike,testFrameStrike.getType() );
         Assertions.assertEquals(Frame.KindOfFrame.Regular,testFrame.getType() );
         testFrame=new Frame(9,1 );
         Assertions.assertEquals(Frame.KindOfFrame.Spare,testFrame.getType() );
-//        testFrame=new Frame(9,5); // => system -1 ok
+//        testFrame=new ingeniousVersion.Frame(9,5); // => system -1 ok
 
 
     }
 
     @Test
-    void getScore() {
+    void TestgetScore() {
         Assertions.assertEquals(10,testFrameStrike.getPinsKnockedDown() );
         Assertions.assertEquals(8,testFrame.getPinsKnockedDown() );
 
     }
 
     @Test
-    void getNumberOfFallenPinByTheFirstBall() {
-        Assertions.assertEquals(10,testFrameStrike.getNumberOfFallenPinByTheFirstBall() );
+    void TestgetNumberOfFallenPinByTheFirstBall() {
+        Assertions.assertEquals(10,testFrameStrike.getNumberOfPinsKnockedDownByTheFirstBall() );
 
-        Assertions.assertEquals(7,testFrame.getNumberOfFallenPinByTheFirstBall() );
+        Assertions.assertEquals(7,testFrame.getNumberOfPinsKnockedDownByTheFirstBall() );
 
     }
 
     @Test
-    void getNumberOfFallenPinByTheSecondBall() {
+    void TestgetNumberOfFallenPinByTheSecondBall() {
+        // by default a strike cannot have second ball
+        Assertions.assertEquals(-1,testFrameStrike.getNumberOfPinsKnockedDownByTheSecondBall() );
 
-        Assertions.assertEquals(0,testFrameStrike.getNumberOfFallenPinByTheSecondBall() );
-
-        Assertions.assertEquals(1,testFrame.getNumberOfFallenPinByTheSecondBall() );
+        Assertions.assertEquals(1,testFrame.getNumberOfPinsKnockedDownByTheSecondBall() );
     }
+
+    @Test
+    void TestFinalFrame() {
+        testFrameStrike.addRoll(9);
+        Assertions.assertEquals(9,testFrameStrike.getNumberOfPinsKnockedDownByTheSecondBall());
+        testFrameStrike.addRoll(7);
+        Assertions.assertEquals(7,testFrameStrike.getNumberOfPinsKnockedDownByTheThirdBall());
+        testFrame = new Frame(9,1);
+        testFrame.addRoll(7);
+        Assertions.assertEquals(1,testFrame.getNumberOfPinsKnockedDownByTheSecondBall() );
+        Assertions.assertEquals(7,testFrame.getNumberOfPinsKnockedDownByTheThirdBall());
+        testFrame = new Frame(9,0);
+        testFrame.addRoll(7);
+        Assertions.assertEquals(0,testFrame.getNumberOfPinsKnockedDownByTheSecondBall() );
+        Assertions.assertEquals(-1,testFrame.getNumberOfPinsKnockedDownByTheThirdBall());
+
+    }
+
 }

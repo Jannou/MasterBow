@@ -2,12 +2,17 @@
 
 Little software to display and compute score for a bowling game.
 
-## TODO
-  -> tests for Game class
+##README 
 
-  -> bound number of frame (10 by default up to 12 if 3 strikes successively)
+    To test betaGame(not functional at this point(cannot handle 10th frame case) add -b or beta as first arguemnt.
+    
+## TODO
 
   -> improve complexity (regardless toString)
+  
+  -> improve design 
+  
+  -> improve quality 
 
 outputSample (29/06/18@22h12)
 
