@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="200.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.191"
+      fx:controller="com.nanabaskint.gui.controllers.CBoard">
+    <MenuBar VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <items>
+                <MenuItem mnemonicParsing="false" onAction="#newGame" text="New"/>
+                <MenuItem mnemonicParsing="false" onAction="#quitApp" text="Quit"/>
+            </items>
+        </Menu>
+    </MenuBar>
+    <Pane fx:id="boardPane" prefHeight="170.0" prefWidth="640.0">
+        <children>
+            <VBox layoutX="585.0" prefHeight="170.0" prefWidth="130.0">
+                <children>
+                    <HBox prefHeight="73.0" prefWidth="130.0"/>
+                    <TextArea fx:id="totalScore" editable="false" layoutY="100.0" prefHeight="47.0" prefWidth="100.0"
+                              text="   Score : 0">
+                        <VBox.margin>
+                            <Insets top="42.0"/>
+                        </VBox.margin>
+                    </TextArea>
+                </children>
+            </VBox>
+        </children>
+    </Pane>
+</VBox>

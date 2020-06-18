@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="mainBox" prefHeight="170.0" prefWidth="172.0"
+      xmlns="http://javafx.com/javafx/8.0.191" fx:controller="com.nanabaskint.gui.controllers.CFinalFrame">
+    <children>
+        <TextArea fx:id="frameTitle" editable="false" layoutX="103.0" prefHeight="37.0" prefWidth="97.0"/>
+        <HBox prefHeight="73.0" prefWidth="96.0">
+            <children>
+                <TextField fx:id="input0" editable="false" onAction="#input0Entered" prefHeight="80.0"
+                           prefWidth="35.0"/>
+                <TextField fx:id="input1" editable="false" onAction="#input1Entered" prefHeight="73.0"
+                           prefWidth="35.0"/>
+                <TextField fx:id="input2" editable="false" onAction="#input2Entered" prefHeight="80.0"
+                           prefWidth="35.0"/>
+                <TextField fx:id="input3" editable="false" onAction="#input3Entered" prefHeight="73.0"
+                           prefWidth="35.0"/>
+                <TextField fx:id="input4" editable="false" onAction="#input4Entered" prefHeight="73.0"
+                           prefWidth="35.0"/>
+            </children>
+        </HBox>
+        <TextArea fx:id="frameScore" editable="false" prefHeight="47.0" prefWidth="103.0" text="FScore : 0"/>
+    </children>
+</VBox>
