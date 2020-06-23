@@ -10,7 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -45,7 +44,7 @@ public class CBoard {
         Parent root = null;
         try {
             root = fxmlLoader.load();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (isFinal) {

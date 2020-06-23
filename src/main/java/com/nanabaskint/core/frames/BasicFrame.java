@@ -1,4 +1,4 @@
-package com.nanabaskint.core.Frames;
+package com.nanabaskint.core.frames;
 
 import com.nanabaskint.core.Conductor;
 import com.nanabaskint.core.Game;
@@ -76,7 +76,7 @@ public class BasicFrame implements Frame {
                 // update counter of roll to listen
                 numberOfRollsToListen--;
 
-                //activate next input, is frame is completed then there is another frame having an activated input on the com.nanabaskint.gui.
+                //activate next input, is frame is completed then there is another frame having an activated input on the com.main.java.nanabaskint.gui.
                 activateInputOnGUI(isCompleted() ? -1 : currentRoll + 1);
 
                 // update type of frame

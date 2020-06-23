@@ -1,9 +1,9 @@
 package com.nanabaskint.core;
 
 
-import com.nanabaskint.core.Frames.BasicFrame;
-import com.nanabaskint.core.Frames.FinalFrame;
-import com.nanabaskint.core.Frames.Frame;
+import com.nanabaskint.core.frames.BasicFrame;
+import com.nanabaskint.core.frames.FinalFrame;
+import com.nanabaskint.core.frames.Frame;
 import com.nanabaskint.gui.controllers.CBoard;
 
 public class Game {

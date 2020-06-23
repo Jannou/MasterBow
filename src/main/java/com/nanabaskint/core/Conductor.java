@@ -1,6 +1,6 @@
 package com.nanabaskint.core;
 
-import com.nanabaskint.core.Frames.Frame;
+import com.nanabaskint.core.frames.Frame;
 
 import java.util.ArrayList;
 

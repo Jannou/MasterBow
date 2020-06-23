@@ -9,7 +9,7 @@
         <TextArea fx:id="frameTitle" editable="false" prefHeight="37.0" prefWidth="97.0"/>
         <HBox prefHeight="73.0" prefWidth="96.0">
             <children>
-                <TextField fx:id="input0" editable="false" onAction="#input0Entered" prefHeight="80.0"
+                <TextField fx:id="input0" editable="false" onAction="#inputEntered" prefHeight="80.0"
                            prefWidth="35.0"/>
                 <TextField fx:id="input1" editable="false" onAction="#input1Entered" prefHeight="73.0"
                            prefWidth="35.0"/>

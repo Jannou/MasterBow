@@ -1,4 +1,4 @@
-package com.nanabaskint.core.Frames;
+package com.nanabaskint.core.frames;
 
 /**
  * A frame.

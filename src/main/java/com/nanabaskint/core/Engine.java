@@ -1,6 +1,7 @@
 package com.nanabaskint.core;
 
 
+import com.nanabaskint.gui.controllers.CBoard;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,11 +10,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Engine {
-    public static final int NUMBER_OF_FRAMES_IN_THE_GAME = 5;
-    private static final double VERSION = 1.0;
+    public static final int NUMBER_OF_FRAMES_IN_THE_GAME = 10;
+    private static final double VERSION = 0.1;
     private static Engine core;
     private final Stage primStage;
-    private com.nanabaskint.gui.controllers.CBoard boardController;
+    private CBoard boardController;
 
 
     private Engine(Stage _primaryStage) {
@@ -34,7 +35,7 @@ public class Engine {
         {
 
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/nanabaskint/gui/views/VBoard.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/VBoard.fxml"));
             if (fxmlLoader != null) {
                 Parent root = fxmlLoader.load();
                 boardController = fxmlLoader.getController();
