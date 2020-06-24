@@ -13,15 +13,15 @@ public class Frame {
     //TODO change design
 
     // type of the frame
-    private KindOfFrame type;
+    private final KindOfFrame type;
     // total of fallen pins during the frame
-    private int pinsKnockedDown;
+    private final int pinsKnockedDown;
     // score of the frame ;
     private int score = 0;
     // number of pins knocked over during the first roll of the frame
-    private int numberOfPinsKnockedDownByTheFirstBall=-1;
+    private int numberOfPinsKnockedDownByTheFirstBall;
     // number of pins knocked over during the second roll of the frame
-    private int numberOfPinsKnockedDownByTheSecondBall=-1;
+    private int numberOfPinsKnockedDownByTheSecondBall;
 
     // error msg
     private static final String RULES_ERROR = "violation of the rules : total of pins knocked down during a frame is over 10  |%d:%d|... Check the input please.";
@@ -102,9 +102,10 @@ public class Frame {
     }
 
 
-
     /**
      * Customise a Frame to manage 10th frame behavior
+     * Yeap, I did that x)
+     *
      * @param arg1 first roll to be played
      * @return 0 if no rule violation -1 otherwise
      */

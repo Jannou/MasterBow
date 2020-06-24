@@ -7,17 +7,18 @@ import java.util.Arrays;
 public class PrettyGame {
 
     // error msg
-    private static final String LAST_FRAME_FORMAT_ERROR="The last frame may contain up to three rolls iff the player perform a strike or a spare before ... Check the input please.";
+    private static final String LAST_FRAME_FORMAT_ERROR = "The last frame may contain up to three rolls iff the player perform a strike or a spare before ... Check the input please.";
 
-    private Frame[] frames;
-    private int score =0;
+    private final Frame[] frames;
+    private int score = 0;
 
-    private PrettyGame(Frame[] _frames){
-        frames= _frames;
+    private PrettyGame(Frame[] _frames) {
+        frames = _frames;
     }
 
     /**
      * Build a game on the basis of a array on integers
+     *
      * @return a game representing the inputs
      */
     static PrettyGame buildGame(int[] fallenPins) {
@@ -144,27 +145,27 @@ public class PrettyGame {
             Score.append(spaces, 0, 3 - String.valueOf(score).length()).append(score).append(col);
         }
 
-        if(frames.length==10){
+        if (frames.length == 10) {
             sep.append("####");
-            MyFrame.append(" ").append(frames.length).append(String.valueOf((frames.length )).length() < 2 ? " " : "").append(col);
+            MyFrame.append(" ").append(frames.length).append(String.valueOf((frames.length)).length() < 2 ? " " : "").append(col);
             Result.append(frames[0].getType() == Frame.KindOfFrame.Regular ?
                     frames[0].getNumberOfPinsKnockedDownByTheFirstBall() + ":" + frames[0].getNumberOfPinsKnockedDownByTheSecondBall() :
-                    frames[0].getType() == Frame.KindOfFrame.Spare ? "/ "+formateStrike(frames[0].getNumberOfPinsKnockedDownByTheSecondBall()):
-                            "X"+formateStrike(frames[0].getNumberOfPinsKnockedDownByTheFirstBall())+formateStrike(frames[0].getNumberOfPinsKnockedDownByTheSecondBall())).append(col);
-            score +=frames[0].getScore();
+                    frames[0].getType() == Frame.KindOfFrame.Spare ? "/ " + formatStrike(frames[0].getNumberOfPinsKnockedDownByTheSecondBall()) :
+                            "X" + formatStrike(frames[0].getNumberOfPinsKnockedDownByTheFirstBall()) + formatStrike(frames[0].getNumberOfPinsKnockedDownByTheSecondBall())).append(col);
+            score += frames[0].getScore();
             Score.append(spaces, 0, 3 - String.valueOf(score).length()).append(score).append(col);
         }
 
 
         sep.append("#");
 
-        toString+=sep+" Frame\n"+MyFrame+"\n"+sep+"\n"+Result+"\n"+sep+" Score\n"+Score;
+        toString += sep + " Frame\n" + MyFrame + "\n" + sep + "\n" + Result + "\n" + sep + " Score\n" + Score;
 
         return toString;
     }
 
-    String formateStrike(int i){
-        if(i==10) return "X";
+    String formatStrike(int i) {
+        if (i == 10) return "X";
         else return String.valueOf(i);
     }
 }
