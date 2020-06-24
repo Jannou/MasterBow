@@ -10,7 +10,6 @@
  */
 public class Frame {
 
-    //TODO change design
 
     // type of the frame
     private final KindOfFrame type;
@@ -21,7 +20,7 @@ public class Frame {
     // number of pins knocked over during the first roll of the frame
     private int numberOfPinsKnockedDownByTheFirstBall;
     // number of pins knocked over during the second roll of the frame
-    private int numberOfPinsKnockedDownByTheSecondBall;
+    private int numberOfPinsKnockedDownByTheSecondBall = -1;
 
     // error msg
     private static final String RULES_ERROR = "violation of the rules : total of pins knocked down during a frame is over 10  |%d:%d|... Check the input please.";
