@@ -1,17 +1,21 @@
 package com.nanabaskint.gui.controllers;
 
 import com.nanabaskint.core.Game;
-import com.nanabaskint.core.Utils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class CFrame {
+import java.util.ArrayList;
+
+public abstract class CFrame implements InputConductor {
 
     private final String FSCORE = "FScore : ";
     private Game game;
+
     @FXML
     private VBox mainBox;
 
@@ -19,18 +23,30 @@ public class CFrame {
     private TextArea frameTitle;
 
     @FXML
-    private TextField input0;
+    private HBox inputsBox;
+
     @FXML
-    private TextField input1;
-    @FXML
-    private TextField input2;
+    private ArrayList<TextField> inputs;
+
 
     @FXML
     private TextArea frameScore;
 
-    public CFrame(int numberOfInput) {
-//        for(int input =0 ; input>)
+    public CFrame(int numberOfInputs) {
+        inputs = new ArrayList<>(numberOfInputs);
+        for (int inputIndex = 0; inputIndex < numberOfInputs; inputIndex++) {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/VInput.fxml"));
+            Parent textField = null;
+            try {
+                textField = fxmlLoader.load();
+            } catch (Exception e) {
+                e.printStackTrace(); //TODO lo4j
+            }
+            ((CInput)fxmlLoader.getController()).setInputConductor(this);
+            textField.setId(String.valueOf(inputIndex));
 
+            inputs.add(inputIndex, (TextField) textField);
+        }
     }
 
     /**
@@ -42,28 +58,20 @@ public class CFrame {
         game = _game;
     }
 
+    public void initInputs() {
+        for (int inputIndex = 0; inputIndex < inputs.size(); inputIndex++) {
+            inputsBox.getChildren().add(inputs.get(inputIndex));
+        }
+    }
+
     /**
      * Activate a given TextField
      *
      * @param indexInput an integer representing the index of an input (0 for input0, 1 for input1 .... )
      */
     public void activateInput(int indexInput) {
-        switch (indexInput) {
-            case 0:
-                input0.setEditable(true);
-                input0.setStyle(null);
-                break;
-            case 1:
-                input1.setEditable(true);
-                input1.setStyle(null);
-                break;
-            case 2:
-                input2.setEditable(true);
-                input2.setStyle(null);
-                break;
-            default:
-                break;
-        }
+        inputs.get(indexInput).setEditable(true);
+        inputs.get(indexInput).setStyle(null);
     }
 
     /**
@@ -73,46 +81,6 @@ public class CFrame {
      */
     public void setScore(String score) {
         frameScore.setText(FSCORE + score);
-    }
-
-    /**
-     * performe the switch editable property and forward the input to the game.
-     *
-     * @param input input textFiela
-     */
-    protected void processOnActionGUIinput(TextField input) {
-        String inputAsString = input.getText();
-        if (!inputAsString.equals("") && input.isEditable()) {
-            testInputBeforeProcess(input, inputAsString);
-        }
-    }
-
-    /**
-     * Test the input (have to be integer between 0 ans 15) and convert it into a string if test passed.
-     *
-     * @param input         the input
-     * @param inputAsString a string representing the input.
-     */
-    private void testInputBeforeProcess(TextField input, String inputAsString) {
-        try {
-            int inputAsInteger = Utils.checkAndConvert(inputAsString);
-            switchOffCurrentInput(input);
-            game.lancer(inputAsInteger);
-        } catch (Exception e) {
-            game.alert(e.getMessage());
-        }
-    }
-
-    /**
-     * Switch off the editable property of the current TextField and switch on for the next
-     *
-     * @param current to switch off
-     */
-    private void switchOffCurrentInput(TextField current) {
-        if (current.isEditable()) {
-            current.setEditable(false);
-            current.setStyle(CBoard.DISABLED_COLOR);
-        }
     }
 
     /**
@@ -129,9 +97,9 @@ public class CFrame {
      */
     void init() {
         disableAllInput();
-        input0.setText("");
-        input1.setText("");
-        input2.setText("");
+        for (TextField input : inputs) {
+            input.setText("");
+        }
         setScore("0");
     }
 
@@ -142,16 +110,7 @@ public class CFrame {
      */
     public void isASpare(int indexInput) {
         disableAllInput();
-        switch (indexInput) {
-            case 1:
-                input1.setText("/");
-                break;
-            case 2:
-                input2.setText("/");
-                break;
-            default:
-                break;
-        }
+        inputs.get(indexInput).setText("/");
     }
 
 
@@ -159,63 +118,24 @@ public class CFrame {
      * Customise the view according to Strike rule
      */
     public void isAStrike(int indexInput) {
-        if (indexInput == 0) {
-            isAStrike();
-        } else {
-            disableAllInput();
-            switch (indexInput) {
-                case 1:
-                    input1.setText("X");
-                    break;
-                case 2:
-                    input2.setText("X");
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 
-    /**
-     * Customise the view according to Strike rule
-     */
-    public void isAStrike() {
         disableAllInput();
-        input0.setText("X");
+        inputs.get(indexInput).setText("X");
+
+
     }
 
     /**
      * Disable all inputs
      */
     public void disableAllInput() {
-        input0.setEditable(false);
-        input0.setStyle(CBoard.DISABLED_COLOR);
-        input1.setEditable(false);
-        input1.setStyle(CBoard.DISABLED_COLOR);
-        input2.setEditable(false);
-        input2.setStyle(CBoard.DISABLED_COLOR);
+        for (TextField input : inputs) {
+            input.setEditable(false);
+            input.setStyle(CBoard.DISABLED_COLOR);
+        }
+
     }
 
-    @FXML
-    private void inputEntered(ActionEvent e) {
-        System.out.println(e);
-        processOnActionGUIinput(input0);
-    }
-
-    @FXML
-    private void input0Entered() {
-        processOnActionGUIinput(input0);
-    }
-
-    @FXML
-    private void input1Entered() {
-        processOnActionGUIinput(input1);
-    }
-
-    @FXML
-    private void input2Entered() {
-        processOnActionGUIinput(input2);
-    }
 
     public String getTitle() {
         return frameTitle.getText();
@@ -230,16 +150,11 @@ public class CFrame {
         frameTitle.setText("Frame : " + frameNumber);
     }
 
-
-    protected TextField getInput0() {
-        return input0;
+    public void lancer(int inputAsInteger) {
+        game.lancer(inputAsInteger);
     }
 
-    protected TextField getInput1() {
-        return input1;
-    }
-
-    protected TextField getInput3() {
-        return input2;
+    public void alert(String message) {
+        game.alert(message);
     }
 }

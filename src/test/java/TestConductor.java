@@ -55,7 +55,7 @@ class TestConductor {
         frame1 = new BasicFrame(null, conductor, null);
         assertEquals(0, conductor.getFramesToInform().indexOf(frame1));
         conductor.unsubscribe(frame1);
-        conductor.updateStack();
+        conductor.performUnsubscription();
         assertFalse(conductor.getFramesToInform().contains(frame1));
     }
 

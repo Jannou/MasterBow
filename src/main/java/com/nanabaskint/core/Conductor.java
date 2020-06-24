@@ -48,27 +48,28 @@ public class Conductor {
     /**
      * this method is used to bypass the concurrence problem.
      */
-    public void updateStack() {
+    public void performUnsubscription() {
         framesToInform.removeAll(framesToDelete);
         framesToDelete = new ArrayList<>(4);
     }
 
     /**
-     * this method is designed to inform all the subscribed frame.
+     * This method is designed to inform all the subscribed frame.
+     * In that way, each Frame can compute her score herself.
      *
      * @param input the data to forward.
      */
-    protected void informAll(int input) {
+    public void informAll(int input) {
         for (Frame frame : framesToInform) {
             frame.numberOfFallenPinsDuringCurrentRoll(input);
         }
-        updateStack();
+        performUnsubscription();
     }
 
     /**
      * This method allow us to clear the stack of frame that are currently listen the input .
      */
-    protected void clear() {
+    public void clear() {
         framesToInform.clear();
         framesToDelete.clear();
     }

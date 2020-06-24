@@ -10,7 +10,7 @@ public class Utils {
     /**
      * error msg
      */
-    private static final String INPUT_HELP = "Inputs have to be an integer between " + MIN + " and " + MAX + "\n";
+    private static final String INPUT_HELP = "Input has to be an integer between " + MIN + " and " + MAX + "\n";
 
     /**
      * This method return an integer on basis of a string

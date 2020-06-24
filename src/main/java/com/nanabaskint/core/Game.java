@@ -52,7 +52,7 @@ public class Game {
         try {
             cBoard.setScore(score);
         } catch (Exception e) {
-            System.out.println("board controller into game is null, no GUI paired");
+            System.out.println("board controller into game is null, no GUI paired"); //TODO change by log4j
         }
 
         frames = new Frame[numberOfFrames];
@@ -90,13 +90,13 @@ public class Game {
     }
 
     /**
-     * donne le résultat du lancer pour ce joueur
+     * give the result of the current roll
      *
-     * @param quilles donne le nombre de quilles abattues par ce lancer
+     * @param fallenPins number of pins knocked dow during current roll
      */
-    public void lancer(int quilles) {
+    public void lancer(int fallenPins) {
         // conductor inform all the registered frames.
-        conductor.informAll(quilles);
+        conductor.informAll(fallenPins);
         framesManager();
     }
 
@@ -128,7 +128,7 @@ public class Game {
      */
     public void alert(String message) {
         if (cBoard != null) {
-            cBoard.alerte(message);
+            cBoard.alert(message);
         }
     }
 

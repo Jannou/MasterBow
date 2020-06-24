@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class CBoard {
 
+    public static final int NUMBER_OF_FRAMES_IN_THE_GAME = 5; //TODO extract to configuration
+
     public static final String DISABLED_COLOR = "-fx-background-color: #bfbfbf;";
     private final int OFFSET = 103;
     private final String SCORE = "   Score : ";
@@ -45,36 +47,36 @@ public class CBoard {
         try {
             root = fxmlLoader.load();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO lo4j
         }
         if (isFinal) {
             finalController = fxmlLoader.getController();
+            finalController.setGame(game);
+            finalController.initInputs();
             finalController.setTitle(cBasicFrames.size() + 1);
             finalController.setLayoutX(currentLayoutX);
             currentLayoutX += OFFSET;
-            finalController.setGame(game);
-            boardPane.getChildren().add(root);
+
 
         } else {
             CBasicFrame controller = fxmlLoader.getController();
+            controller.setGame(game);
+            controller.initInputs();
             cBasicFrames.add(controller);
             controller.setTitle(cBasicFrames.indexOf(controller) + 1);
             controller.setLayoutX(currentLayoutX);
             currentLayoutX += OFFSET;
-            controller.setGame(game);
-            boardPane.getChildren().add(root);
         }
+        boardPane.getChildren().add(root);
 
     }
 
-    /**
-     * Build the frame. (4basic + 1 final)
-     */
+
     public void buildBoard() {
-        addFrame(false);
-        addFrame(false);
-        addFrame(false);
-        addFrame(false);
+        setGame(new Game(NUMBER_OF_FRAMES_IN_THE_GAME, this));
+        for (int number_of_frame = 0; number_of_frame < NUMBER_OF_FRAMES_IN_THE_GAME - 1; number_of_frame++) {
+            addFrame(false);
+        }
         addFrame(true);
         init();
     }
@@ -140,7 +142,7 @@ public class CBoard {
      *
      * @param message the alert message.
      */
-    public void alerte(String message) {
+    public void alert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning Dialog");
         alert.setHeaderText("Input Problem founded");

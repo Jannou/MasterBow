@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.TextField?>
+<TextField fx:controller="com.nanabaskint.gui.controllers.CInput"
+           fx:id="textField"
+           onAction="#onAction" editable="false" prefHeight="80.0" prefWidth="35.0"
+           xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1"/>
