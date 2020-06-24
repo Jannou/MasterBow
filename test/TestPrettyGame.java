@@ -12,7 +12,7 @@ class TestPrettyGame {
         Assertions.assertEquals(score, PrettyGame.buildGame(game).getTotalScore());
 
         // 13 rolls => exit(1)                                                                OK
-        game = new int[]{10,10,10,10,10,10,10,10,10,10,10,10,1};
+        //game = new int[]{10,10,10,10,10,10,10,10,10,10,10,10,1};
         //Assertions.assertEquals(score, PrettyGame.buildGame(game).getTotalScore());
 
         // empty game => score = 0
@@ -21,7 +21,7 @@ class TestPrettyGame {
         Assertions.assertEquals(score, PrettyGame.buildGame(game).getTotalScore());
 
         // 12 rolls without spare or strike => exit(1)                                          OK
-        game = new int[]{10,10,10,10,10,10,10,10,10,8,1,10};
+        //game = new int[]{10,10,10,10,10,10,10,10,10,8,1,10};
         //score = 0;
         //Assertions.assertEquals(score, PrettyGame.buildGame(game).getTotalScore());
 

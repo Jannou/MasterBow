@@ -1,4 +1,4 @@
-# MasterBow
+# MasterBowling 1.0
 
 Little software to display and compute score for a bowling game.
 
