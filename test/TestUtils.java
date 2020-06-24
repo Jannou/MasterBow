@@ -4,11 +4,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestUtils {
-    private String[] sample1 = {"r"};
-    private String[] sample2 = {"15"};
-    private String[] sample3 = {"1",""};
-    private String[] sample4 = {"4","2","6","0","1","5","9","1","0","6","10","8","1","4","3","1","0","1","8"};
-
+    private final String[] sample1 = {"r"};
+    private final String[] sample2 = {"15"};
+    private final String[] sample3 = {"1", ""};
+    private final String[] sample4 = {"4", "2", "6", "0", "1", "5", "9", "1", "0", "6", "10", "8", "1", "4", "3", "1", "0", "1", "8"};
 
 
     @Test
