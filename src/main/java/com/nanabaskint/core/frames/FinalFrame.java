@@ -44,7 +44,6 @@ public class FinalFrame extends Frame {
 
     @Override
     public void numberOfFallenPinsDuringCurrentRoll(int numberOfFallenPinsDuringCurrentRoll) {
-
         if (getNumberOfRollsToListen() > 0) {
             try {
                 //test if input does not exceed the max value allowed for frame.
@@ -58,10 +57,10 @@ public class FinalFrame extends Frame {
 
                 //activate next input given that this is the final frame, the condition is to activate input until frame
                 // does not need to listen any next roll.
-                activateInputOnGUI(getNumberOfRollsToListen() > 0 ? getCurrentRoll() + 1 : -1);
+                activateInputOnGUI(isCompleted() ? -1 : getCurrentRoll() + 1);
 
                 // update type of frame
-                if (getType() == FrameType.REGULAR && getPinsKnockedDown() == 15) { //detect strike
+                if (getType() == FrameType.REGULAR && getPinsKnockedDown() == 15) { //detect strike or spare
                     if (getCurrentRoll() == 0) { // strike
                         setAsStrike(); // deactivates all input of the frame
                     } else {
@@ -156,6 +155,10 @@ public class FinalFrame extends Frame {
         }
     }
 
+    @Override
+    public String toString() {
+        return getClass().getName() + super.toString();
+    }
 
     // testPurpose
     private int extraPinsKnockedDown = 0;

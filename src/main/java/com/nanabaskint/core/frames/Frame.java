@@ -12,15 +12,15 @@ public abstract class Frame {
 
     //RULES must be extract to an configuration component
     /**
-     * Number of rolls composing the frame.
+     * Number of throws composing the frame.
      */
-    int numberOfRollsComposingTheFrame = 3;
+    int numberOfThrowsComposingTheFrame = 3;
     /**
-     * Number of rolls to listen after a spare in order to compute the score of the spare.
+     * Number of throws to listen after a spare in order to compute the score of the spare.
      */
-    int numberOfRollsToListenForASpare = 2;
+    int numberOfThrowsToListenForASpare = 2;
     /**
-     * Number of rolls to listen after a strike in order to compute the score of the strike.
+     * Number of throws to listen after a strike in order to compute the score of the strike.
      */
     int numberOfRollsToListenForAStrike = 3;
     /**
@@ -41,9 +41,9 @@ public abstract class Frame {
     private int score = 0;
     // type of the frame
     private FrameType type = FrameType.REGULAR;
-    // index of the current roll
+    // index of the current throw
     private int currentRoll = 0;
-    private int numberOfRollsToListen = numberOfRollsComposingTheFrame;
+    private int numberOfRollsToListen = numberOfThrowsComposingTheFrame;
 
 
     /**
@@ -54,7 +54,7 @@ public abstract class Frame {
         if (getcFrame() != null) {
             getcFrame().isASpare(getCurrentRoll());
         }
-        setNumberOfRollsToListen(numberOfRollsToListenForASpare);
+        setNumberOfRollsToListen(numberOfThrowsToListenForASpare);
     }
 
     /**
@@ -110,16 +110,14 @@ public abstract class Frame {
     }
 
     /**
-     * This method is design to inform the frame how many pins fallen during the current roll.
+     * This method is design to inform the frame how many pins fallen during the current throw.
      *
-     * @param numberOfFallenPinsDuringCurrentRoll the number of fallen pins during the current roll
-     * @return 0 if OK 1 otherwise
+     * @param numberOfFallenPinsDuringCurrentRoll the number of fallen pins during the current throw
      */
     public abstract void numberOfFallenPinsDuringCurrentRoll(int numberOfFallenPinsDuringCurrentRoll);
 
-
     public boolean isCompleted() {
-        return getNumberOfRollsToListen() == 0;// no rolls to listen (end of final) => end of game
+        return getNumberOfRollsToListen() == 0;// no throws to listen (end of final) => end of game
     }
 
     /**
@@ -133,30 +131,30 @@ public abstract class Frame {
 
     @Override
     public String toString() {
-        return "FinalFrame{" +
-                " type=" + getType() +
+        return '{' +
+                "type=" + getType() +
                 ", pinsKnockedDown=" + getPinsKnockedDown() +
                 ", score=" + getScore() +
                 ", numberOfRollsToListen=" + getNumberOfRollsToListen() +
                 ", is completed ? " + isCompleted() +
-                ", GUI component= " + (getcFrame() != null ? getcFrame().getTitle() : "null ") + '}';
+                ", GUI component= " + (getcFrame() != null ? getcFrame().getTitle() : "null ") +
+                '}';
     }
 
-
-    public int getNumberOfRollsComposingTheFrame() {
-        return numberOfRollsComposingTheFrame;
+    public int getNumberOfThrowsComposingTheFrame() {
+        return numberOfThrowsComposingTheFrame;
     }
 
-    public void setNumberOfRollsComposingTheFrame(int numberOfRollsComposingTheFrame) {
-        this.numberOfRollsComposingTheFrame = numberOfRollsComposingTheFrame;
+    public void setNumberOfThrowsComposingTheFrame(int numberOfThrowsComposingTheFrame) {
+        this.numberOfThrowsComposingTheFrame = numberOfThrowsComposingTheFrame;
     }
 
-    public int getNumberOfRollsToListenForASpare() {
-        return numberOfRollsToListenForASpare;
+    public int getNumberOfThrowsToListenForASpare() {
+        return numberOfThrowsToListenForASpare;
     }
 
-    public void setNumberOfRollsToListenForASpare(int numberOfRollsToListenForASpare) {
-        this.numberOfRollsToListenForASpare = numberOfRollsToListenForASpare;
+    public void setNumberOfThrowsToListenForASpare(int numberOfThrowsToListenForASpare) {
+        this.numberOfThrowsToListenForASpare = numberOfThrowsToListenForASpare;
     }
 
     public int getNumberOfRollsToListenForAStrike() {

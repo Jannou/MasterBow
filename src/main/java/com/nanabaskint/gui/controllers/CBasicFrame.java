@@ -4,7 +4,7 @@ public class CBasicFrame extends CFrame {
 
 
     public CBasicFrame() {
-        super(3);//TODO extract to configuration
+        super(NUMBER_OF_THROWS);
     }
 
 }

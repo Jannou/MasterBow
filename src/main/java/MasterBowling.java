@@ -4,10 +4,10 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 
-public class Main extends Application {
+public class MasterBowling extends Application {
     public static void main(String[] args) {
         launch(args);
-//        System.out.println(PrettyGame.buildGame(Utils.checkAndPreProcessInput(args)));
+//        System.out.println(PrettyGame.buildGame(Utils.checkAndPreProcessInput(args))); //OLD boy <3
     }
 
     @Override
@@ -15,9 +15,9 @@ public class Main extends Application {
 
         primaryStage.setOnCloseRequest(e -> Platform.exit());
 
-        Engine engin = Engine.run(primaryStage);
+        Engine engine = Engine.run(primaryStage);
 
-        engin.start();
+        engine.start();
 
 
     }

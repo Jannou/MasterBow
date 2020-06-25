@@ -11,7 +11,7 @@ import com.nanabaskint.gui.controllers.CBasicFrame;
 public class BasicFrame extends Frame {
 
     /**
-     * A frame of our African bowling. A frame is a component of a game, it have to subcribe to a conductor,
+     * A basic frame of Master bowling. A frame is a component of a game, it have to subscribe to a conductor,
      * and have to be paired with a GUI component called cBasicFrame
      *
      * @param _game        the game to which the frame below.
@@ -26,7 +26,7 @@ public class BasicFrame extends Frame {
         try {
             getConductor().subscribe(this);
         } catch (NullPointerException e) {
-            System.out.println("Warning : Conductor into BasicFrame is null, frame can not subscribe to conductor ! ");
+            System.out.println("Warning : BasicFrame's conductor is null, frame can not subscribe !"); // todo log4j
         }
 
         setcFrame(_cBasicFrame);
@@ -36,7 +36,7 @@ public class BasicFrame extends Frame {
         try {
             getcFrame().activateInput(0);
         } catch (Exception e) {
-            System.out.println("Warning : BasicFrame controller into BasicFrame is null ");
+            System.out.println("Warning : BasicFrame's controller Frame is null "); // todo log4j
         }
     }
 
@@ -59,7 +59,7 @@ public class BasicFrame extends Frame {
                 setNumberOfRollsToListen(getNumberOfRollsToListen() - 1);
 
                 // does not need to listen any next roll.
-                activateInputOnGUI(getNumberOfRollsToListen() > 0 ? getCurrentRoll() + 1 : -1);
+                activateInputOnGUI(isCompleted() ? -1 : getCurrentRoll() + 1);
 
                              // update type of frame
                 if (getType() == FrameType.REGULAR && getPinsKnockedDown() == 15) { //detect strike
@@ -99,4 +99,8 @@ public class BasicFrame extends Frame {
         // due to probability and lazy eval, it's better to test in this order (for non profesional player)
     }
 
+    @Override
+    public String toString() {
+        return getClass().getName() + super.toString();
+    }
 }

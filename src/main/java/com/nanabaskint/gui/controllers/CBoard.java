@@ -90,6 +90,7 @@ public class CBoard {
         }
         finalController.init();
         game.init();
+//        boardPane.setStyle("-fx-background-color: black;");
     }
 
     /**

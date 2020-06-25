@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public abstract class CFrame implements InputConductor {
+    //TODO JAVADOC
+
+    static final int NUMBER_OF_THROWS = 3; //TODO extract to configuration
 
     private final String FSCORE = "FScore : ";
     private Game game;
@@ -25,8 +28,8 @@ public abstract class CFrame implements InputConductor {
     @FXML
     private HBox inputsBox;
 
-    @FXML
-    private ArrayList<TextField> inputs;
+
+    private final ArrayList<TextField> inputs;
 
 
     @FXML
@@ -42,9 +45,7 @@ public abstract class CFrame implements InputConductor {
             } catch (Exception e) {
                 e.printStackTrace(); //TODO lo4j
             }
-            ((CInput)fxmlLoader.getController()).setInputConductor(this);
-            textField.setId(String.valueOf(inputIndex));
-
+            ((CInput) fxmlLoader.getController()).setInputConductor(this);
             inputs.add(inputIndex, (TextField) textField);
         }
     }
@@ -59,8 +60,8 @@ public abstract class CFrame implements InputConductor {
     }
 
     public void initInputs() {
-        for (int inputIndex = 0; inputIndex < inputs.size(); inputIndex++) {
-            inputsBox.getChildren().add(inputs.get(inputIndex));
+        for (TextField input : inputs) {
+            inputsBox.getChildren().add(input);
         }
     }
 
@@ -70,8 +71,12 @@ public abstract class CFrame implements InputConductor {
      * @param indexInput an integer representing the index of an input (0 for input0, 1 for input1 .... )
      */
     public void activateInput(int indexInput) {
-        inputs.get(indexInput).setEditable(true);
-        inputs.get(indexInput).setStyle(null);
+        if (indexInput >= 0) {
+            inputs.get(indexInput).setEditable(true);
+            inputs.get(indexInput).setStyle(null);
+            inputs.get(indexInput).requestFocus();
+        }
+
     }
 
     /**
@@ -147,7 +152,7 @@ public abstract class CFrame implements InputConductor {
      * @param frameNumber the number of the current frame in the game.
      */
     void setTitle(int frameNumber) {
-        frameTitle.setText("Frame : " + frameNumber);
+        frameTitle.setText(String.valueOf(frameNumber));
     }
 
     public void lancer(int inputAsInteger) {

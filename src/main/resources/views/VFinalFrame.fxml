@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="mainBox" prefHeight="170.0" prefWidth="103.0"
-      xmlns="http://javafx.com/javafx/8.0.191" fx:controller="com.nanabaskint.gui.controllers.CFinalFrame">
-    <children>
-        <TextArea fx:id="frameTitle" editable="false" prefHeight="37.0" prefWidth="97.0"/>
-        <HBox fx:id="inputsBox" prefHeight="73.0" prefWidth="96.0">
-            <children>
-                <!--<TextField fx:id="input0" editable="false" onAction="#inputEntered" prefHeight="80.0"
-                           prefWidth="35.0"/>
-                <TextField fx:id="input1" editable="false"  prefHeight="73.0"
-                           prefWidth="35.0"/>
-                <TextField fx:id="input2" editable="false"  prefHeight="87.0"
-                           prefWidth="35.0"/>-->
-            </children>
-        </HBox>
-        <TextArea fx:id="frameScore" editable="false" prefHeight="47.0" prefWidth="103.0" text="FScore : 0"/>
-    </children>
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      prefHeight="170.0"
+      xmlns="http://javafx.com/javafx/8.0.191"
+      fx:id="mainBox"
+      fx:controller="com.nanabaskint.gui.controllers.CFinalFrame">
+    <TextArea fx:id="frameTitle" editable="false" prefHeight="37.0" prefWidth="97.0"/>
+    <HBox fx:id="inputsBox" prefHeight="73.0">
+    </HBox>
+    <TextArea fx:id="frameScore" editable="false" prefHeight="47.0" prefWidth="103.0" text="FScore : 0"/>
 </VBox>
